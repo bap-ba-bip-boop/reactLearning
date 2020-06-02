@@ -1,0 +1,65 @@
+console.log("javascript running")
+
+//JSX
+let app ={
+    title : "Some title",
+    subtitle : "This is some subtitle",
+    options : []
+}
+
+function optionAmount(options){
+    if(options.length > 0){
+        return 'Here are your options';
+    }else{
+        return 'No options';
+    }
+}
+
+const appRoot = document.getElementById("app");
+const onFormSubmit = (e) =>{
+    e.preventDefault();
+
+    const option = e.target.elements.option.value;
+
+    if(option){
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        renderTemplate();
+    }
+}
+const resetlist =()=>{
+    app.options = [];
+    renderTemplate();
+}
+const pickitem = ()=>{
+    console.log(
+        app.options[Math.floor(Math.random()*app.options.length)]
+    );
+
+}
+const renderTemplate = () =>{
+    let Template = (
+        <div>
+            <h1>{app.title}</h1>
+            {app.subtitle && <p>Age: {app.subtitle}</p> }
+            <p>{optionAmount(app.options)}</p>
+            <button disabled = {app.options.length == 0} onClick ={pickitem}>Pick an item</button>
+            <button onClick = {resetlist}>Wipe List</button>
+            <ol>
+                {
+                    app.options.map((item)=>{
+                        return <li key = {item}>{item}</li>
+                    })
+                }
+            </ol>
+            <form onSubmit = {onFormSubmit}>
+                <input type="text" name="option"/>
+                <button>Add Option</button>
+            </form>
+        </div>
+    );
+    
+    ReactDOM.render(Template, appRoot);
+}
+
+renderTemplate();

@@ -1,0 +1,27 @@
+console.log("thing works!");
+
+const visibilityToggle ={
+    title: "Visibility Toggle",
+    hiddenContent: "Now you see me!"
+};
+
+const appRoot = document.getElementById("app");
+let isShown = false;
+
+const buttonClicked = ()=>{
+    isShown = !isShown;
+    renderFunk();
+};
+const renderFunk = ()=>{
+    const Template =(
+        <div>
+            <h1>VisibilityToggle</h1>
+        <button onClick = {buttonClicked}>{isShown == false ? "Show content" : "Hide content"}</button>
+        {isShown && <p>{visibilityToggle.hiddenContent}</p>}
+        </div>
+    );
+
+    ReactDOM.render(Template,appRoot);
+};
+
+renderFunk();
